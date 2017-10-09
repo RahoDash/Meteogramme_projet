@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace meteogramme
@@ -14,6 +15,7 @@ namespace meteogramme
         /// </summary>
         private string _latitude;
         private string _longitude;
+        private string _stateDateTime;
         /// <summary>
         /// This will be the url to access the data we need.
         /// </summary>
@@ -21,6 +23,9 @@ namespace meteogramme
 
         Temperature temperature;
         Precipitation precipitation;
+        private uint CountIterration;
+        private DateTime InitDateTime;
+        private uint maxIterration;
 
         /// <summary>
         /// Encapsulation of fields
@@ -28,6 +33,7 @@ namespace meteogramme
         public string Latitude { get => _latitude; set => _latitude = value; }
         public string Longitude { get => _longitude; set => _longitude = value; }
         public string Url { get => DEFAULT_URL + "lat=" + Latitude + ";lon=" + Longitude; }
+        public string StateDateTime { get => _stateDateTime; set => _stateDateTime = value; }
 
         /// <summary>
         /// constructor
@@ -50,6 +56,7 @@ namespace meteogramme
         /// <returns></returns>
         public void Downlaod()
         {
+            CountIterration = 0;
             if (CanRequest(Url))
             {
                 try
@@ -61,55 +68,50 @@ namespace meteogramme
                         {
                             switch (reader.Name)
                             {
-                                case "temperature":
-                                    reader.MoveToAttribute("value");
-                                    temperature.Temp.Add(reader.Value);
+                                case "model":
+                                    //InitDateTime = Convert.ToDateTime(reader)
+                                    InitDateTime = reader.MoveToAttribute("from") ? Convert.ToDateTime(reader.Value.Remove(10)).AddDays(3) : DateTime.Now;
                                     break;
-                                case "minTemperature":
-                                    reader.MoveToAttribute("value");
-                                    temperature.TempMin.Add(reader.Value);
-                                    break;
-                                case "maxTemperature":
-                                    reader.MoveToAttribute("value");
-                                    temperature.TempMax.Add(reader.Value);
-                                    break;
-                                case "precipitation":
-                                    //reader.MoveToAttribute("value");
-                                    
-                                    //reader.
-                                    //reader.MoveToAttribute("minvalue");
-                                    //precipitation.ValueMin.Add(reader.Value);
-                                    //reader.MoveToAttribute("maxvalue");
-                                    //precipitation.ValueMax.Add(reader.Value);
-
-                                    while (reader.MoveToNextAttribute())
+                                case "time":
+                                    if (reader.MoveToAttribute("to"))
                                     {
-                                        switch (reader.Name)
-                                        {
-                                            case "value":
-                                                precipitation.Value.Add(reader.Value);
-                                                break;
-                                            case "minvalue":
-                                                precipitation.ValueMin.Add(reader.Value);
-                                                break;
-                                            case "maxvalue":
-                                                precipitation.ValueMax.Add(reader.Value);
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        if (InitDateTime > Convert.ToDateTime(reader.Value.Remove(10)))
+                                            maxIterration = 3;
+                                        else
+                                            maxIterration = 0;
+                                        StateDateTime = reader.Value + CountIterration;
+                                        if (CountIterration > maxIterration)
+                                            CountIterration = 0;
+                                        else
+                                            CountIterration++;
                                     }
                                     break;
+                                case "temperature":
+                                    if (reader.MoveToAttribute("value"))
+                                        temperature.Temp[StateDateTime] = reader.Value;
+                                    break;
+                                case "precipitation":
+                                    if (reader.MoveToAttribute("value"))
+                                        precipitation.Value[StateDateTime] = reader.Value;
+                                    break;
                                 case "symbol":
-                                    reader.MoveToAttribute("number");
-                                    precipitation.Id.Add(reader.Value);
+                                    if (reader.MoveToAttribute("number"))
+                                        precipitation.Number[StateDateTime] = reader.Value;
+                                    break;
+                                case "minTemperature":
+                                    if (reader.MoveToAttribute("value"))
+                                        temperature.TempMin[StateDateTime] = reader.Value;
+                                    break;
+                                case "maxTemperature":
+                                    if (reader.MoveToAttribute("value"))
+                                        temperature.TempMax[StateDateTime] = reader.Value;
                                     break;
                                 default:
                                     break;
                             }
                         }
                     }
-
+                    MessageBox.Show("fait");
                 }
                 catch (Exception)
                 {

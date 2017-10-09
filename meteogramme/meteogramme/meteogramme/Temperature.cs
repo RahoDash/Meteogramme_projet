@@ -7,15 +7,15 @@ namespace meteogramme
 {
     public class Temperature
     {
-        public List<string> TempMin { get; set; }
-        public List<string> TempMax { get; set; }
-        public List<string> Temp { get; set; }
+        public Dictionary<string,string> TempMin { get; set; }
+        public Dictionary<string, string> TempMax { get; set; }
+        public Dictionary<string, string> Temp { get; set; }
 
         public Temperature()
         {
-            Temp = new List<string>();
-            TempMax = new List<string>();
-            TempMin = new List<string>();
+            Temp = new Dictionary<string, string>();
+            TempMax = new Dictionary<string, string>();
+            TempMin = new Dictionary<string, string>();
         }
     }
 }

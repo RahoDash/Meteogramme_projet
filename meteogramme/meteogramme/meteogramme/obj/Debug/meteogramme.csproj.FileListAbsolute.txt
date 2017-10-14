@@ -27,3 +27,13 @@ C:\Users\SILKAB_INFO\Desktop\gitrepos\Meteogramme_projet\meteogramme\meteogramme
 C:\Users\SILKAB_INFO\Desktop\gitrepos\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.csproj.CoreCompileInputs.cache
 C:\Users\SILKAB_INFO\Desktop\gitrepos\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.exe
 C:\Users\SILKAB_INFO\Desktop\gitrepos\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.pdb
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\bin\Debug\meteogramme.exe.config
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\bin\Debug\meteogramme.exe
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\bin\Debug\meteogramme.pdb
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.csprojResolveAssemblyReference.cache
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.Properties.Resources.resources
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.Vue.resources
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.csproj.GenerateResource.Cache
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.csproj.CoreCompileInputs.cache
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.exe
+C:\Users\RahoDash\Desktop\Meteogramme_projet\meteogramme\meteogramme\meteogramme\obj\Debug\meteogramme.pdb

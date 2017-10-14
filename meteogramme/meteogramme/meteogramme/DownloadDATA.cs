@@ -25,7 +25,6 @@ namespace meteogramme
         Precipitation precipitation;
         private uint CountIterration;
         private DateTime InitDateTime;
-        private uint maxIterration;
 
         /// <summary>
         /// Encapsulation of fields
@@ -46,15 +45,14 @@ namespace meteogramme
             Longitude = lon;
             temperature = new Temperature();
             precipitation = new Precipitation();
-            //throw new System.NotImplementedException();
-            Downlaod();
+            ReadAndExtractData();
         }
 
         /// <summary>
-        /// 
+        /// Will read the xml file and extract the data and put them in the differente classes
         /// </summary>
         /// <returns></returns>
-        public void Downlaod()
+        public void ReadAndExtractData()
         {
             CountIterration = 0;
             if (CanRequest(Url))
@@ -75,15 +73,18 @@ namespace meteogramme
                                 case "time":
                                     if (reader.MoveToAttribute("to"))
                                     {
-                                        if (InitDateTime > Convert.ToDateTime(reader.Value.Remove(10)))
-                                            maxIterration = 3;
+                                        if (StateDateTime != null)
+                                        {
+                                            if (reader.Value == StateDateTime.Remove(StateDateTime.Length - 1))
+                                                StateDateTime = StateDateTime.Remove(StateDateTime.Length - 1) + ++CountIterration;
+                                            else
+                                            {
+                                                CountIterration = 0;
+                                                StateDateTime = reader.Value + CountIterration;
+                                            }
+                                        }
                                         else
-                                            maxIterration = 0;
-                                        StateDateTime = reader.Value + CountIterration;
-                                        if (CountIterration > maxIterration)
-                                            CountIterration = 0;
-                                        else
-                                            CountIterration++;
+                                            StateDateTime = reader.Value + CountIterration;
                                     }
                                     break;
                                 case "temperature":
@@ -120,6 +121,11 @@ namespace meteogramme
             }
         }
 
+        /// <summary>
+        /// Will test if the url is reponding
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private bool CanRequest(string url)
         {
             bool result = false;
